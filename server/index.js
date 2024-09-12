@@ -5,14 +5,14 @@ const LOCAL_PORT_VITE = 5173;
 
 const http = require('http').createServer(app);
 const cors = require('cors');
-const {Server} = require('socket.io');
+const { Server } = require('socket.io');
 const socketIO = new Server(http, {
 	cors: {
-		origin: `http//localhost:5173:${LOCAL_PORT_VITE}`,
+		origin: `http://localhost:${LOCAL_PORT_VITE}`,
 	},
 });
 
-app.get('api', (req, res) => {
+app.get('/api', (req, res) => {
 	res.json({
 		message: 'Hello',
 	});
@@ -23,9 +23,6 @@ socketIO.on('connection', (socket) => {
 	socket.on('disconnect', () => {
 		console.log(`User disconnected: ${socket.id}`);
 	});
-	// socket.on('message', (message) => {
-	// 	socketIO.emit('message', message);
-	// });
 });
 
 http.listen(PORT, () => {
