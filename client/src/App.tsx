@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
-import { io } from 'socket.io-client';
+import io from 'socket.io-client';
 import Home from './components/home/Home';
 import ChatPage from './components/chat/ChatPage';
 
