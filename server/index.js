@@ -1,3 +1,4 @@
+// @ts-nocheck
 const express = require('express');
 const app = express();
 const PORT = 5000;
@@ -18,8 +19,23 @@ app.get('/api', (req, res) => {
 	});
 });
 
+const users = []
+
 socketIO.on('connection', (socket) => {
 	console.log(`User connected: ${socket.id}`);
+	socket.on('sendMessage', (data) => {
+		socketIO.emit('response', data);
+	});
+	
+	socket.on('typing', (data) => { 
+		socket.broadcast.emit('responseTyping', data);
+	})
+	
+	socket.on('newUser', (data) => {
+		users.push(data)
+		socketIO.emit('responseNewUser', users);
+	})
+	
 	socket.on('disconnect', () => {
 		console.log(`User disconnected: ${socket.id}`);
 	});
